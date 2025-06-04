@@ -1,0 +1,12 @@
+{
+  "addons": {
+    "marketplace-lang-helper@darl.cat": {
+      "updates": [
+        {
+          "version": "1.0.0",
+          "update_link": "https://github.com/DarlCat/marketplace-browser-langfixer/releases/download/v1.0.0/marketplace-firefox.zip"
+        }
+      ]
+    }
+  }
+}

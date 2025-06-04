@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Second Life Marketplace Language Helper",
+  "version": "1.0.0",
+  "description": "Extension active only on marketplace.secondlife.com. Replaces the language code in the URL with the browser language, because clicking links elsewhere onto the marketplace makes those language codes sticky across sessions to the account.",
+  "permissions": [],
+  "host_permissions": [
+    "https://marketplace.secondlife.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://marketplace.secondlife.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "marketplace-lang-helper@darl.cat",
+      "update_url": "https://raw.githubusercontent.com/DarlCat/marketplace-browser-langfixer/main/updates.json"
+    }
+  }
+}

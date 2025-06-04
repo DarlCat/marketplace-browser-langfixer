@@ -1,0 +1,43 @@
+name: Build and Release Extension
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install web-ext for Firefox
+        run: npm install -g web-ext
+
+      - name: Build and sign extension for Firefox
+        env:
+          WEB_EXT_API_KEY: ${{ secrets.FIREFOX_API_KEY }}
+          WEB_EXT_API_SECRET: ${{ secrets.FIREFOX_API_SECRET }}
+        run: |
+          mkdir -p dist
+          web-ext sign --api-key $WEB_EXT_API_KEY --api-secret $WEB_EXT_API_SECRET --artifacts-dir dist --source-dir src
+
+      - name: Zip extension for Chrome
+        run: |
+          mkdir -p dist
+          zip -r dist/marketplace-chrome.zip src/* || true
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/marketplace-chrome.zip
+            dist/*.xpi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
